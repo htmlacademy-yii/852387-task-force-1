@@ -1,14 +1,14 @@
 <?php
 
-namespace TaskForce;
+use TaskForce\classes\Task;
 
-require 'Task.php';
+require __DIR__ . '/../vendor/autoload.php';
 
 $task = new Task();
-assert($task->getNextStatus('cancel')==='cancel');
-assert($task->getNextStatus('refuse')==='fail');
-assert($task->getNextStatus('execute')==='done');
-assert($task->getNextStatus('reply')==='active');
-assert($task->getNextStatus('new') === null);
+var_dump(assert($task->getNextStatus('cancel') === 'cancel'));
+var_dump(assert($task->getNextStatus('refuse') === 'fail'));
+var_dump(assert($task->getNextStatus('execute') === 'done'));
+var_dump(assert($task->getNextStatus('reply') === 'active'));
+var_dump(assert($task->getNextStatus('new') === null));
 // тест проходит как true
-assert($task->getNextStatus('1')==='cancel');
+var_dump(assert($task->getNextStatus('1') === 'cancel'));
