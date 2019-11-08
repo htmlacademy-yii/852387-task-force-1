@@ -1,0 +1,26 @@
+{
+    "name": "tankov/task-force",
+    "description": "Web service for finding task performers",
+    "type": "project",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "tankov",
+            "email": "tan.kov@hotmail.com"
+        }
+    ],
+    "scripts": {
+      "phpcs": "phpcs",
+      "phpcbf": "phpcbf"
+    },
+    "autoload": {
+      "psr-4": {
+        "TaskForce\\": "src/"
+      }
+    },
+    "require": {
+    },
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.5"
+    }
+}
