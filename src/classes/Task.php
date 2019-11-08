@@ -1,6 +1,6 @@
 <?php
 
-namespace TaskForce;
+namespace TaskForce\classes;
 
 class Task
 {
@@ -42,5 +42,4 @@ class Task
     {
         return array_key_exists($action, self::ACTION_TO_STATUS) ? self::ACTION_TO_STATUS[$action] : null;
     }
-
 }
