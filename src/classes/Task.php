@@ -40,6 +40,6 @@ class Task
      */
     public function getNextStatus(string $action)
     {
-        return array_key_exists($action, self::ACTION_TO_STATUS) ? self::ACTION_TO_STATUS[$action] : null;
+        return self::ACTION_TO_STATUS[$action];
     }
 }
