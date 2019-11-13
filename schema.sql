@@ -4,7 +4,7 @@ CREATE DATABASE taskForce
 
 USE taskForce;
 
-CREATE TABLE `user` {
+CREATE TABLE `users` {
   `id` INT unsigned NOT NULL AUTO_INCTEMENT,
   `name` CHAR(255) NOT NULL,
   `email` CHAR(255) NOT NULL,
@@ -26,12 +26,12 @@ CREATE TABLE `user` {
   UNIQUE KEY `email` (`email`)
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `favorit` {
+CREATE TABLE `favorites` {
   `user_customer_id` INT unsigned NOT NULL,
   `user_worker_id` INT unsigned NOT NULL
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `specialization` {
+CREATE TABLE `specializations` {
   `user_id` INT unsigned NOT NULL,
   `courier` TINYINT DEFAULT '0',
   `remote` TINYINT DEFAULT '0',
@@ -41,7 +41,7 @@ CREATE TABLE `specialization` {
   `visit` TINYINT DEFAULT '0'
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `notification` {
+CREATE TABLE `notifications` {
   `user_id` INT unsigned NOT NULL,
   `new_message` TINYINT DEFAULT '0',
   `action_task` TINYINT DEFAULT '0',
@@ -49,7 +49,7 @@ CREATE TABLE `notification` {
   `show_contacts` TINYINT DEFAULT '0',
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `task` {
+CREATE TABLE `tasks` {
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `user_customer_id` INT unsigned NOT NULL,
   `user_worker_id` INT unsigned NOT NULL,
@@ -66,7 +66,7 @@ CREATE TABLE `task` {
   PRIMARY KEY (`id`),
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `review` {
+CREATE TABLE `reviews` {
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `user_id` INT unsigned NOT NULL,
   `task_id` unsigned NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE `review` {
   `score` INT unsigned NOT NULL
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `task_status` {
+CREATE TABLE `task_statuses` {
   `task_id` INT unsigned NOT NULL,
   `new` TINYINT DEFAULT '1',
   `cancel` TINYINT DEFAULT '0',
@@ -83,14 +83,14 @@ CREATE TABLE `task_status` {
   `active` TINYINT DEFAULT '0'
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `photo` {
+CREATE TABLE `photos` {
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `task_id` INT unsigned NOT NULL,
   `user_id` INT unsigned NOT NULL,
   `photo` CHAR(255)
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `comment` {
+CREATE TABLE `comments` {
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `user_id` INT unsigned NOT NULL,
   `task_id` INT unsigned NOT NULL,
@@ -99,7 +99,7 @@ CREATE TABLE `comment` {
   `text_comment` CHAR(255)
 } ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-CREATE TABLE `response` {
+CREATE TABLE `responses` {
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `user_id` INT unsigned NOT NULL,
   `task_id` INT unsigned NOT NULL,
