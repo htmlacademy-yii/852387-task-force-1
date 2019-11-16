@@ -8,10 +8,10 @@ USE taskForce;
 
 CREATE TABLE `user` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
-  `name` VARCHAR(255) NOT NULL DEFAULT '',
-  `email` VARCHAR(255) NOT NULL DEFAULT '',
+  `name` VARCHAR(255),
+  `email` VARCHAR(255),
   `created_at` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `password` VARCHAR(64) NOT NULL DEFAULT '',
+  `password` VARCHAR(64),
   `birthday` DATE,
   `city` VARCHAR(255),
   `role` INT NOT NULL, -- 1 === customer/ 2 === worker
@@ -52,13 +52,14 @@ CREATE TABLE `task` (
   `icon_task` VARCHAR(255),
   `task_status` INT,
   `add_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `complite_date` DATE DEFAULT NULL,
+  `complete_date` DATE DEFAULT NULL,
   `info_task` VARCHAR(255),
-  `file_url` VARCHAR(255), -- если несколько файлов, то нужна ещё таблица для файлов?
+  `file_url` VARCHAR(255),
   `is_remote` VARCHAR(5), -- yes/no
   `location` VARCHAR(255),
   `price` INT,
-  `coordinate` VARCHAR(255),
+  `coordinate_lat` DECIMAL(10, 7),
+  `coordinate_long` DECIMAL(10,7)
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
