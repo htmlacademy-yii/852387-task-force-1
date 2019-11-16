@@ -19,7 +19,7 @@ CREATE TABLE `user` (
   `phone` VARCHAR(255),
   `skype` VARCHAR(255),
   `another_chat` VARCHAR(255),
-  `status_user` INT, -- занят над задачей/свободен(1/2)
+  `status` INT, -- занят над задачей/свободен(1/2)
   `rating` INT,
   `avatar_photo` VARCHAR(255),
   `last_activity_at` DATETIME,
@@ -48,12 +48,12 @@ CREATE TABLE `task` (
   `customer_id` INT unsigned NOT NULL,
   `worker_id` INT unsigned NOT NULL,
   `category` INT,
-  `name_task` VARCHAR(255),
-  `icon_task` VARCHAR(255),
-  `task_status` INT,
+  `name` VARCHAR(255),
+  `icon` VARCHAR(255),
+  `status` INT,
   `add_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   `complete_date` DATE DEFAULT NULL,
-  `info_task` VARCHAR(255),
+  `info` VARCHAR(255),
   `file_url` VARCHAR(255),
   `is_remote` VARCHAR(5), -- yes/no
   `location` VARCHAR(255),
@@ -67,7 +67,7 @@ CREATE TABLE `review` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
   `user_id` INT unsigned NOT NULL,
   `task_id` INT unsigned NOT NULL,
-  `text_review` VARCHAR(255),
+  `text` VARCHAR(255),
   `score` INT unsigned NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
@@ -85,7 +85,7 @@ CREATE TABLE `comment` (
   `user_id` INT unsigned NOT NULL,
   `task_id` INT unsigned NOT NULL,
   `add_date` TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  `text_comment` VARCHAR(255),
+  `text` VARCHAR(255),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
