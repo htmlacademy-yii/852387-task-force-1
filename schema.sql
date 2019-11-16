@@ -59,7 +59,7 @@ CREATE TABLE `task` (
   `location` VARCHAR(255),
   `price` INT,
   `coordinate_lat` DECIMAL(10, 7),
-  `coordinate_long` DECIMAL(10,7)
+  `coordinate_long` DECIMAL(10,7),
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
