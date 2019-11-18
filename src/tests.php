@@ -1,14 +1,15 @@
 <?php
 
-use TaskForce\classes\Task;
+use TaskForce\classes\AvailableAction;
 
 require __DIR__ . '/../vendor/autoload.php';
 
-$task = new Task();
-assert($task->getNextStatus('cancel') === $task::STATUS_CANCEL);
-assert($task->getNextStatus('refuse') === $task::STATUS_FAIL);
-assert($task->getNextStatus('execute') === $task::STATUS_DONE);
-assert($task->getNextStatus('reply') === $task::STATUS_ACTIVE);
+$task = new AvailableAction();
+var_dump($task::ACTION_TO_STATUS);
+assert($task->getNextStatus('TaskForce\classes\ActionCancel') === $task::STATUS_CANCEL);
+assert($task->getNextStatus('TaskForce\classes\ActionRefuse') === $task::STATUS_FAIL);
+assert($task->getNextStatus('TaskForce\classes\ActionDone') === $task::STATUS_DONE);
+assert($task->getNextStatus('TaskForce\classes\ActionReply') === $task::STATUS_ACTIVE);
 assert($task->getNextStatus('new') === null);
 
 assert($task->getNextStatus('1') === $task::STATUS_CANCEL);
