@@ -4,24 +4,18 @@ namespace TaskForce\classes;
 
 class ActionCancel extends Action
 {
-    private function __construct()
+    public static function getTitle(): string
     {
-        $this->title = 'Отменить';
-        $this->innerName = 'cancel';
+        return 'отменить';
     }
 
-    public function getTitle(): string
+    public static function getInnerName(): string
     {
-        return $this->title;
+        return 'cancel';
     }
 
-    public function getInnerName(): string
+    public static function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
     {
-        return $this->innerName;
-    }
-
-    public function compareId($currentUserId): bool
-    {
-        return  $currentUserId === self::getCustomerId();
+        return  $currentUserId === $clientId;
     }
 }

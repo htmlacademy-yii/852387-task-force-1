@@ -29,7 +29,7 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 CREATE TABLE `favorit` (
-  `customer_id` INT unsigned NOT NULL,
+  `client_id` INT unsigned NOT NULL,
   `worker_id` INT unsigned NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -45,7 +45,7 @@ CREATE TABLE `notification` (
 
 CREATE TABLE `task` (
   `id` INT unsigned NOT NULL AUTO_INCREMENT,
-  `customer_id` INT unsigned NOT NULL,
+  `client_id` INT unsigned NOT NULL,
   `worker_id` INT unsigned NOT NULL,
   `category` INT,
   `name` VARCHAR(255),

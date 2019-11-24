@@ -4,24 +4,18 @@ namespace TaskForce\classes;
 
 class ActionReply extends Action
 {
-    private function __construct()
-    {
-        $this->title = 'Откликнуться';
-        $this->innerName = 'reply';
-    }
-
     public function getTitle(): string
     {
-        return $this->title;
+        return 'откликнуться';
     }
 
     public function getInnerName(): string
     {
-        return $this->innerName;
+        return 'reply';
     }
 
-    public function compareId($currentUserId): bool
+    public function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
     {
-        return  $currentUserId !== self::getCustomerId();
+        return  $currentUserId !== $clientId;
     }
 }

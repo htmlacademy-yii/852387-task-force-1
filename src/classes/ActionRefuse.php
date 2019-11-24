@@ -4,24 +4,18 @@ namespace TaskForce\classes;
 
 class ActionRefuse extends Action
 {
-    private function __construct()
+    public static function getTitle(): string
     {
-        $this->title = 'Отказаться';
-        $this->innerName = 'refuse';
+        return 'отказаться';
     }
 
-    public function getTitle(): string
+    public static function getInnerName(): string
     {
-        return $this->title;
+        return 'refuse';
     }
 
-    public function getInnerName(): string
+    public static function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
     {
-        return $this->innerName;
-    }
-
-    public function compareId($currentUserId): bool
-    {
-        return  $currentUserId === self::getWorkerId();
+        return  $currentUserId === $workerId;
     }
 }

@@ -2,7 +2,7 @@
 
 namespace TaskForce\classes;
 
-class AvailableAction
+class AvailableActions
 {
     const STATUS_NEW = 'new';
     const STATUS_CANCEL = 'cancel';
@@ -15,19 +15,19 @@ class AvailableAction
     const ACTION_DONE = ActionDone::class;
     const ACTION_REPLY = ActionReply::class;
 
-    const ROLE_CUSTOMER = 'customer';
+    const ROLE_CLIENT = 'client';
     const ROLE_WORKER = 'worker';
 
     const ACTIONS_MAP = [
         self::STATUS_NEW => [
-            self::ROLE_CUSTOMER => self::ACTION_CANCEL,
+            self::ROLE_CLIENT => self::ACTION_CANCEL,
             self::ROLE_WORKER => self::ACTION_REPLY
         ],
         self::STATUS_CANCEL => [],
         self::STATUS_DONE => [],
         self::STATUS_FAIL => [],
         self::STATUS_ACTIVE => [
-            self::ROLE_CUSTOMER => self::ACTION_DONE,
+            self::ROLE_CLIENT => self::ACTION_DONE,
             self::ROLE_WORKER => self::ACTION_REFUSE
         ]
     ];
@@ -38,6 +38,27 @@ class AvailableAction
         self::ACTION_DONE => self::STATUS_DONE,
         self::ACTION_REPLY => self::STATUS_ACTIVE
     ];
+
+    public $status;
+    public $workerId;
+    public $clientId;
+
+    public function __construct(string $status, ?int $workerId, int $clientId)
+    {
+        $this->setStatus($status);
+        $this->workerId = $workerId;
+        $this->clientId = $clientId;
+    }
+
+    public function setStatus($status)
+    {
+        $this->status = $status;
+    }
+
+    public function statusAllowedActions()
+    {
+        return $this->status;
+    }
 
     /**
      * Метод для возврата статуса, в который перейдет задача для указанного действия
@@ -60,19 +81,20 @@ class AvailableAction
      *
      * @return array
      */
-    public function getListAvailableActions($role, $userId)
+    public function getAvailableActions($role, $userId)
     {
-        $currentTask = new Task($data = []);
-        $currentStatusTask = $currentTask->getStatusTask();
-        $workerId = $currentTask->getWorkerId();
-        $customerId = $currentTask->getCustomerId();
+        $statusActions = $this->statusAllowedActions();
 
-        if (empty(self::ACTIONS_MAP[$currentStatusTask])) {
+        $actions = self::ACTIONS_MAP[$statusActions];
+
+        if (empty($actions)) {
             return [];
-        } elseif ($userId === $customerId || $userId === $workerId) {
-            return self::ACTIONS_MAP[$currentStatusTask][$role];
-        } elseif ($userId !== $customerId && $role === self::ROLE_WORKER && $currentStatusTask === self::STATUS_NEW) {
-            return self::ACTIONS_MAP[$currentStatusTask][$role];
+        }
+
+        $roleActions = $actions[$role];
+
+        if (new $roleActions->compareId($userId, $this->workerId, $this->clientId)) {
+            return $roleActions;
         }
         return [];
     }

@@ -4,24 +4,18 @@ namespace TaskForce\classes;
 
 class ActionDone extends Action
 {
-    private function __construct()
+    public static function getTitle(): string
     {
-        $this->title = 'Выполнено';
-        $this->innerName = 'Done';
+        return 'выполнено';
     }
 
-    public function getTitle(): string
+    public static function getInnerName(): string
     {
-        return $this->title;
+        return 'done';
     }
 
-    public function getInnerName(): string
+    public static function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
     {
-        return $this->innerName;
-    }
-
-    public function compareId($currentUserId): bool
-    {
-        return  $currentUserId === self::getCustomerId();
+        return  $currentUserId === $clientId;
     }
 }
