@@ -16,6 +16,6 @@ class ActionReply extends Action
 
     public function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
     {
-        return  $currentUserId !== $clientId;
+        return  $currentUserId !== $clientId && $currentUserId !== $workerId;
     }
 }

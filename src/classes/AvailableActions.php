@@ -55,6 +55,11 @@ class AvailableActions
         $this->status = $status;
     }
 
+    /**
+     * Метод для возврата текущего статуса задачи statusAllowedActions
+     *
+     * @return void
+     */
     public function statusAllowedActions()
     {
         return $this->status;
@@ -91,9 +96,9 @@ class AvailableActions
             return [];
         }
 
-        $roleActions = $actions[$role];
+        $roleActions = new $actions[$role];
 
-        if (new $roleActions->compareId($userId, $this->workerId, $this->clientId)) {
+        if ($roleActions->compareId($userId, $this->workerId, $this->clientId)) {
             return $roleActions;
         }
         return [];
