@@ -4,17 +4,17 @@ namespace TaskForce\classes;
 
 class ActionReply extends Action
 {
-    public function getTitle(): string
+    public static function getTitle(): string
     {
         return 'откликнуться';
     }
 
-    public function getInnerName(): string
+    public static function getInnerName(): string
     {
         return 'reply';
     }
 
-    public function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
+    public static function compareId(int $currentUserId, ?int $workerId, int $clientId): bool
     {
         return  $currentUserId !== $clientId && $currentUserId !== $workerId;
     }

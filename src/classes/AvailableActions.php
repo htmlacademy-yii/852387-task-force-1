@@ -96,9 +96,10 @@ class AvailableActions
             return [];
         }
 
-        $roleActions = new $actions[$role];
+        $roleActions = $actions[$role];
+        $nextAction = new $roleActions();
 
-        if ($roleActions->compareId($userId, $this->workerId, $this->clientId)) {
+        if ($nextAction->compareId($userId, $this->workerId, $this->clientId)) {
             return $roleActions;
         }
         return [];
