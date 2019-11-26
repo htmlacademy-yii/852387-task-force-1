@@ -16,9 +16,9 @@ assert($task->getNextStatus('new') === null);
 assert($task->getNextStatus('1') !== $task::STATUS_CANCEL);
 
 assert($task->getAvailableActions('worker', 2) === []);
-assert($task->getAvailableActions('worker', 0) === $task::ACTION_REPLY);
-assert($task->getAvailableActions('worker', 6) === $task::ACTION_REPLY);
-assert($task->getAvailableActions('client', 4) === $task::ACTION_CANCEL);
+assert($task->getAvailableActions('worker', 0) === [$task::ACTION_REPLY]);
+assert($task->getAvailableActions('worker', 6) === [$task::ACTION_REPLY]);
+assert($task->getAvailableActions('client', 4) === [$task::ACTION_CANCEL]);
 
 $task2 = new AvailableActions('cancel', 2, 4);
 assert($task2->getAvailableActions('worker', 2) === []);
@@ -36,7 +36,7 @@ assert($task4->getAvailableActions('worker', 3) === []);
 assert($task4->getAvailableActions('client', 4) === []);
 
 $task5 = new AvailableActions('active', 2, 4);
-assert($task5->getAvailableActions('worker', 2) === $task5::ACTION_REFUSE);
+assert($task5->getAvailableActions('worker', 2) === [$task5::ACTION_REFUSE]);
 assert($task5->getAvailableActions('worker', 3) === []);
-assert($task5->getAvailableActions('client', 4) === $task5::ACTION_DONE);
+assert($task5->getAvailableActions('client', 4) === [$task5::ACTION_DONE]);
 assert($task5->getAvailableActions('client', 9) === []);

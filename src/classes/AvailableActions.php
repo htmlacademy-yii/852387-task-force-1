@@ -60,7 +60,7 @@ class AvailableActions
      *
      * @return void
      */
-    public function statusAllowedActions()
+    public function getStatusCurrent()
     {
         return $this->status;
     }
@@ -79,7 +79,7 @@ class AvailableActions
     }
 
     /**
-     * Метод для получения списка доступных действий getListAvailableActions
+     * Метод для получения списка доступных действий getAvailableActions
      *
      * @param string  $role   роль
      * @param integer $userId id пользователя
@@ -88,20 +88,11 @@ class AvailableActions
      */
     public function getAvailableActions($role, $userId)
     {
-        $statusActions = $this->statusAllowedActions();
-
-        $actions = self::ACTIONS_MAP[$statusActions];
-
-        if (empty($actions)) {
-            return [];
-        }
-
-        $roleActions = $actions[$role];
-        $nextAction = new $roleActions();
-
-        if ($nextAction->compareId($userId, $this->workerId, $this->clientId)) {
-            return $roleActions;
-        }
-        return [];
+        $availableActions[] = self::ACTIONS_MAP[$this->getStatusCurrent()][$role] ?? null;
+        $availableActions = array_filter($availableActions);
+        return array_filter($availableActions, function ($className) use ($userId) {
+            return $className::compareId($userId, $this->workerId, $this->clientId);
+            }
+        );
     }
 }
