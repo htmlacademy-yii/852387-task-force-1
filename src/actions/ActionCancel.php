@@ -1,17 +1,17 @@
 <?php
 
-namespace TaskForce\classes;
+namespace TaskForce\actions;
 
-class ActionDone extends Action
+class ActionCancel extends Action
 {
     public static function getTitle(): string
     {
-        return 'выполнено';
+        return 'отменить';
     }
 
     public static function getInnerName(): string
     {
-        return 'done';
+        return 'cancel';
     }
 
     public static function compareId(int $currentUserId, ?int $workerId, int $clientId): bool

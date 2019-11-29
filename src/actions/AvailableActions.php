@@ -1,6 +1,9 @@
 <?php
 
-namespace TaskForce\classes;
+namespace TaskForce\actions;
+
+use TaskForce\ex\InputValues;
+use TaskForce\ex\InputValuesException;
 
 class AvailableActions
 {
@@ -10,13 +13,25 @@ class AvailableActions
     const STATUS_FAIL = 'fail';
     const STATUS_ACTIVE = 'active';
 
+    const LIST_STATUSES = [
+        self::STATUS_NEW, self::STATUS_CANCEL, self::STATUS_DONE, self::STATUS_FAIL, self::STATUS_ACTIVE
+    ];
+
     const ACTION_CANCEL = ActionCancel::class;
     const ACTION_REFUSE = ActionRefuse::class;
     const ACTION_DONE = ActionDone::class;
     const ACTION_REPLY = ActionReply::class;
 
+    const LIST_ACTIONS = [
+        self::ACTION_CANCEL, self::ACTION_REFUSE, self::ACTION_DONE, self::ACTION_REPLY
+    ];
+
     const ROLE_CLIENT = 'client';
     const ROLE_WORKER = 'worker';
+
+    const LIST_ROLES = [
+        self::ROLE_CLIENT, self::ROLE_WORKER
+    ];
 
     const ACTIONS_MAP = [
         self::STATUS_NEW => [
@@ -50,19 +65,9 @@ class AvailableActions
         $this->clientId = $clientId;
     }
 
-    public function setStatus($status)
+    public function setStatus(string $status)
     {
         $this->status = $status;
-    }
-
-    /**
-     * Метод для возврата текущего статуса задачи statusAllowedActions
-     *
-     * @return void
-     */
-    public function getStatusCurrent()
-    {
-        return $this->status;
     }
 
     /**
@@ -73,8 +78,11 @@ class AvailableActions
      *
      * @return string
      */
-    public static function getNextStatus($action)
+    public static function getNextStatus(string $action):string
     {
+        if (!in_array($action, self::LIST_ACTIONS)) {
+            throw new InputValuesException("Нет такого действия или действие не найдено!");
+        }
         return self::ACTION_TO_STATUS[$action];
     }
 
@@ -86,9 +94,16 @@ class AvailableActions
      *
      * @return array
      */
-    public function getAvailableActions($role, $userId)
+    public function getAvailableActions(string $role, int $userId):array
     {
-        $availableActions[] = self::ACTIONS_MAP[$this->getStatusCurrent()][$role] ?? null;
+        $availableActions[] = self::ACTIONS_MAP[$this->status][$role] ?? null;
+        if (!in_array($this->status, self::LIST_STATUSES)) {
+            throw new InputValuesException("Нет такого статуса или статус не найден!");
+        }
+        if (!in_array($role, self::LIST_ROLES)) {
+            throw new InputValuesException("Нет такой роли или роль не найдена!");
+        }
+
         $availableActions = array_filter($availableActions);
         return array_filter($availableActions, function ($className) use ($userId) {
             return $className::compareId($userId, $this->workerId, $this->clientId);
