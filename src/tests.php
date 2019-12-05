@@ -56,7 +56,6 @@ assert($task5->getAvailableActions('client', 9) === []);
 
 $task6 = new AvailableActions('active', 6, 1);
 
-
 try {
     $task6->getAvailableActions('wok', 6, 1);
 }
