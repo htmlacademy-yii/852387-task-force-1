@@ -1,19 +1,31 @@
 <?php
 
-use TaskForce\classes\AvailableActions;
+use TaskForce\actions\AvailableActions;
+use TaskForce\ex\InputValuesException;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 $task = new AvailableActions('new', 2, 4);
 var_dump($task);
 
-assert($task->getNextStatus('TaskForce\classes\ActionCancel') === $task::STATUS_CANCEL);
-assert($task->getNextStatus('TaskForce\classes\ActionRefuse') === $task::STATUS_FAIL);
-assert($task->getNextStatus('TaskForce\classes\ActionDone') === $task::STATUS_DONE);
-assert($task->getNextStatus('TaskForce\classes\ActionReply') === $task::STATUS_ACTIVE);
-assert($task->getNextStatus('new') === null);
+assert($task->getNextStatus('TaskForce\actions\ActionCancel') === $task::STATUS_CANCEL);
+assert($task->getNextStatus('TaskForce\actions\ActionRefuse') === $task::STATUS_FAIL);
+assert($task->getNextStatus('TaskForce\actions\ActionDone') === $task::STATUS_DONE);
+assert($task->getNextStatus('TaskForce\actions\ActionReply') === $task::STATUS_ACTIVE);
 
-assert($task->getNextStatus('1') !== $task::STATUS_CANCEL);
+try {
+    $task->getNextStatus('new');
+}
+catch (InputValuesException $e) {
+    error_log("Ошибка входящих данных: " . $e->getMessage());
+}
+
+try {
+    $task->getNextStatus('1');
+}
+catch (InputValuesException $e) {
+    error_log("Ошибка входящих данных: " . $e->getMessage());
+}
 
 assert($task->getAvailableActions('worker', 2) === []);
 assert($task->getAvailableActions('worker', 0) === [$task::ACTION_REPLY]);
@@ -40,3 +52,12 @@ assert($task5->getAvailableActions('worker', 2) === [$task5::ACTION_REFUSE]);
 assert($task5->getAvailableActions('worker', 3) === []);
 assert($task5->getAvailableActions('client', 4) === [$task5::ACTION_DONE]);
 assert($task5->getAvailableActions('client', 9) === []);
+
+$task6 = new AvailableActions('active', 6, 1);
+
+try {
+    $task6->getAvailableActions('wok', 6, 1);
+}
+catch (InputValuesException $e) {
+    error_log("Ошибка входящих данных: " . $e->getMessage());
+}
