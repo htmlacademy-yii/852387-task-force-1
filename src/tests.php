@@ -2,6 +2,7 @@
 
 use TaskForce\actions\AvailableActions;
 use TaskForce\ex\InputValuesException;
+use TaskForce\convert\ConvertCsvToSql;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -61,3 +62,8 @@ try {
 catch (InputValuesException $e) {
     error_log("Ошибка входящих данных: " . $e->getMessage());
 }
+
+$sqlCategories = new ConvertCsvToSql('../data/categories.csv', '../sql/queries.sql');
+
+var_dump(($sqlCategories->getHeaders()));
+$sqlCategories->writeSqlFile();
