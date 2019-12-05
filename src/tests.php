@@ -2,6 +2,7 @@
 
 use TaskForce\actions\AvailableActions;
 use TaskForce\ex\InputValuesException;
+use TaskForce\convert\ConvertCsvToSql;
 
 require __DIR__ . '/../vendor/autoload.php';
 
@@ -53,8 +54,8 @@ assert($task5->getAvailableActions('worker', 3) === []);
 assert($task5->getAvailableActions('client', 4) === [$task5::ACTION_DONE]);
 assert($task5->getAvailableActions('client', 9) === []);
 
-$task6 = new AvailableActions('activ', 6, 1);
-$task6->getAvailableActions('wo', 6, 1);
+$task6 = new AvailableActions('active', 6, 1);
+
 
 try {
     $task6->getAvailableActions('wok', 6, 1);
@@ -62,3 +63,8 @@ try {
 catch (InputValuesException $e) {
     error_log("Ошибка входящих данных: " . $e->getMessage());
 }
+
+$sqlCategories = new ConvertCsvToSql('../data/categories.csv', '../sql/queries.sql');
+
+var_dump(($sqlCategories->getHeaders()));
+$sqlCategories->writeSqlFile();

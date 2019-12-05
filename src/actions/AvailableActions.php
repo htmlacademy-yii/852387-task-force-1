@@ -67,7 +67,12 @@ class AvailableActions
 
     public function setStatus(string $status)
     {
+
+
         $this->status = $status;
+        if (!in_array($this->status, self::LIST_STATUSES)) {
+            throw new InputValuesException("Нет такого статуса или статус не найден!");
+        }
     }
 
     /**
@@ -97,9 +102,7 @@ class AvailableActions
     public function getAvailableActions(string $role, int $userId):array
     {
         $availableActions[] = self::ACTIONS_MAP[$this->status][$role] ?? null;
-        if (!in_array($this->status, self::LIST_STATUSES)) {
-            throw new InputValuesException("Нет такого статуса или статус не найден!");
-        }
+
         if (!in_array($role, self::LIST_ROLES)) {
             throw new InputValuesException("Нет такой роли или роль не найдена!");
         }
