@@ -53,7 +53,7 @@ assert($task5->getAvailableActions('worker', 3) === []);
 assert($task5->getAvailableActions('client', 4) === [$task5::ACTION_DONE]);
 assert($task5->getAvailableActions('client', 9) === []);
 
-$task6 = new AvailableActions('activ', 6, 1);
+$task6 = new AvailableActions('active', 6, 1);
 
 try {
     $task6->getAvailableActions('wok', 6, 1);

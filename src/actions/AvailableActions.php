@@ -67,10 +67,10 @@ class AvailableActions
 
     public function setStatus(string $status)
     {
+        $this->status = $status;
         if (!in_array($this->status, self::LIST_STATUSES)) {
             throw new InputValuesException("Нет такого статуса или статус не найден!");
         }
-        $this->status = $status;
     }
 
     /**
