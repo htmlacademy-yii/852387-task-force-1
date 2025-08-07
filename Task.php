@@ -3,19 +3,20 @@ declare(strict_types=1);
 
 class Task
 {
-    private const string STATUS_NEW = 'new';   // новое задание (заказчик)
-    private const string STATUS_CANCEL = 'cancel';  // отменено, отменил заказчик
-    private const string STATUS_ACTIVE = 'active';   // в работе, заказчик выбрал исполнителя, если откликнулись
-    private const string STATUS_READY = 'ready';    // выполнено, принято заказчиком
-    private const string STATUS_FAILED = 'failed';   // провалено, отказался исполнитель
+    // модификатор констант поменяла на public только из-за тестов
+    public const string STATUS_NEW = 'new';   // новое задание (заказчик)
+    public const string STATUS_CANCEL = 'cancel';  // отменено, отменил заказчик
+    public const string STATUS_ACTIVE = 'active';   // в работе, заказчик выбрал исполнителя, если откликнулись
+    public const string STATUS_READY = 'ready';    // выполнено, принято заказчиком
+    public const string STATUS_FAILED = 'failed';   // провалено, отказался исполнитель
 
-    private const string ACTION_CANCEL = 'cancel';   // отменить (заказчик)
-    private const string ACTION_RESPONSE = 'response';  // откликнуться (исполнитель)
-    private const string ACTION_APPROVE_WORKER = 'approve_worker';   // выбрать(принять) исполнителя для задачи (заказчик)
-    private const string ACTION_ACCEPT = 'accept';  // принять работу (заказчик)
-    private const string ACTION_REJECT = 'reject';  // отказаться (исполнитель)
+    public const string ACTION_CANCEL = 'cancel';   // отменить (заказчик)
+    public const string ACTION_RESPONSE = 'response';  // откликнуться (исполнитель)
+    public const string ACTION_APPROVE_WORKER = 'approve_worker';   // выбрать(принять) исполнителя для задачи (заказчик)
+    public const string ACTION_ACCEPT = 'accept';  // принять работу (заказчик)
+    public const string ACTION_REJECT = 'reject';  // отказаться (исполнитель)
 
-    private const array STATUS_TO_ACTIONS = [
+    public const array STATUS_TO_ACTIONS = [
         self::STATUS_NEW => [self::ACTION_CANCEL, self::ACTION_APPROVE_WORKER], //(cancel - для исполнителя, approve_worker - для заказчика, если откликнулись исполнители)
         self::STATUS_CANCEL => [],
         self::STATUS_ACTIVE => [self::ACTION_ACCEPT, self::ACTION_REJECT], //  (accept - для заказчика, reject - для исполнителя)
