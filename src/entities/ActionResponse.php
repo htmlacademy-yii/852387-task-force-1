@@ -5,6 +5,23 @@ namespace app\entities;
 
 class ActionResponse extends Action
 {
+    /**
+     * Метод возврата названия действия на русском языке
+     * @return string
+     **/
+    public function getNotation(): string
+    {
+        return 'откликнуться';
+    }
+
+    /**
+     * Метод получения внутреннего названия действия
+     * @return string
+     **/
+    public function getName(): string
+    {
+        return 'response';
+    }
 
     /**
      * Метод проверки прав

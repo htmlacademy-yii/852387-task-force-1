@@ -6,6 +6,24 @@ namespace app\entities;
 class ActionComplete extends Action
 {
     /**
+     * Метод возврата названия действия на русском языке
+     * @return string
+     **/
+    public function getNotation(): string
+    {
+        return 'принять';
+    }
+
+    /**
+     * Метод получения внутреннего названия действия
+     * @return string
+     **/
+    public function getName(): string
+    {
+        return 'complete';
+    }
+
+    /**
      * Метод проверки прав
      * @param int $currentUserId ID заказчика задания
      * @param int $ownerId ID текущего пользователя
