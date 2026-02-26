@@ -1,7 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace app\entities;
-class ActionAccept extends Action
+
+class ActionComplete extends Action
 {
     /**
      * Метод проверки прав

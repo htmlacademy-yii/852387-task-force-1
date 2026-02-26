@@ -27,11 +27,11 @@ final class Task
      */
     public function getNextStatus(string $action): ?string
     {
-        $action = Action::tryFrom($action);
-        return match ($action) {
+        $currentAction = Action::tryFrom($action);
+        return match ($currentAction) {
             Action::ACTION_CANCEL => Status::STATUS_CANCEL->value,
             Action::ACTION_APPROVE_WORKER => Status::STATUS_ACTIVE->value,
-            Action::ACTION_ACCEPT => Status::STATUS_READY->value,
+            Action::ACTION_COMPLETE => Status::STATUS_COMPLETE->value,
             Action::ACTION_REJECT => Status::STATUS_FAILED->value,
             default => null,
         };
@@ -45,23 +45,24 @@ final class Task
      */
     public function getAvailableAction(string $status, int $userId): ?object
     {
-        $status = Status::tryFrom($status);
-        $actions = match ($status) {
+        $currentStatus = Status::tryFrom($status);
+        $actions = match ($currentStatus) {
             Status::STATUS_NEW => [
                 ActionCancel::class,
-                ActionReply::class
-            ], //(cancel/отменить - для заказчика, reply/откликнуться - для исполнителя)
+                ActionResponse::class
+            ], //(cancel/отменить — для заказчика, reply/откликнуться — для исполнителя)
             Status::STATUS_ACTIVE => [
-                ActionAccept::class,
+                ActionComplete::class,
                 ActionReject::class
-            ], //  (accept/принять - для заказчика, reject/отказаться - для исполнителя)
+            ], //  (accept/принять — для заказчика, reject/отказаться — для исполнителя)
             default => [],
         };
 
         foreach ($actions as $className) {
-            if ($className::compareId($userId, $this->ownerId, $this->workerId))
+            if ($className::compareId($userId, $this->ownerId, $this->workerId)) {
                 return new $className();
-        };
+            }
+        }
         return null;
     }
 

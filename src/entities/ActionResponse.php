@@ -1,10 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace app\entities;
 
-use app\entities\Action;
-
-class ActionReply extends Action
+class ActionResponse extends Action
 {
 
     /**

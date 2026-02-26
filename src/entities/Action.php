@@ -1,6 +1,8 @@
 <?php
+declare(strict_types=1);
 
 namespace app\entities;
+
 abstract class Action
 {
     /**
@@ -12,5 +14,4 @@ abstract class Action
      * @return bool true/false
     **/
     abstract public static function compareId(int $currentUserId, int $ownerId, ?int $workerId): bool;
-
 }
