@@ -21,7 +21,6 @@ final class Task
 
     /**
      * Метод для возврата статуса, в который перейдет задача для указанного действия
-     *
      * @param string $action действие над задачей
      * @return ?string возвращает статус задачи
      */
@@ -39,7 +38,6 @@ final class Task
 
     /**
      * Метод для получения доступных действий для указанного статуса и роли пользователя(заказчик или исполнитель)
-     *
      * @param string $status статус задачи
      * @return ?object возвращает возможные действия в виде объекта действия
      */
@@ -50,11 +48,11 @@ final class Task
             Status::STATUS_NEW => [
                 ActionCancel::class,
                 ActionResponse::class
-            ], //(cancel/отменить — для заказчика, reply/откликнуться — для исполнителя)
+            ], //(cancel/отменить — для заказчика, response/откликнуться — для исполнителя)
             Status::STATUS_ACTIVE => [
                 ActionComplete::class,
                 ActionReject::class
-            ], //  (accept/принять — для заказчика, reject/отказаться — для исполнителя)
+            ], //  (complete/принять — для заказчика, reject/отказаться — для исполнителя)
             default => [],
         };
 
