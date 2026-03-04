@@ -28,5 +28,5 @@ enum Status: string
 }
 
 // проверка
-$status = Status::getTranslateStatusMap();
-var_dump($status);
+//$status = Status::getTranslateStatusMap();
+//var_dump($status);

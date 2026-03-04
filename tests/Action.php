@@ -9,18 +9,22 @@ use app\entities\ActionComplete;
 use app\entities\ActionCancel;
 use app\entities\ActionReject;
 use app\entities\Task;
+use app\exceptions\Task\TaskHasWrongStatusException;
 
 $task = new Task('ready', 2, 3);
+try {
+    $task->getAvailableAction('new', 3);
 
-var_dump($task->getAvailableAction('new', 3));
-assert($task->getAvailableAction('new', 2) == new ActionCancel());
-assert($task->getAvailableAction('cancel', 5) === null);
-assert($task->getAvailableAction('active', 2) == new ActionComplete());
-assert($task->getAvailableAction('complete', 3) === null);
-assert($task->getAvailableAction('failed', 2) === null);
-assert($task->getAvailableAction('reject', 3) === null);
-assert($task->getAvailableAction('', 2) === null);
-assert($task->getAvailableAction('new', 0) === null);
-assert($task->getAvailableAction('active', 3) == new ActionReject());
-
+    assert($task->getAvailableAction('new', 2) == new ActionCancel());
+    assert($task->getAvailableAction('cancel', 5) === null);
+    assert($task->getAvailableAction('active', 2) == new ActionComplete());
+    assert($task->getAvailableAction('complete', 3) === null);
+    assert($task->getAvailableAction('failed', 2) === null);
+    assert($task->getAvailableAction('reject', 3) === null);
+    assert($task->getAvailableAction('', 2) === null);
+    assert($task->getAvailableAction('new', 0) === null);
+    assert($task->getAvailableAction('active', 3) == new ActionReject());
+} catch (TaskHasWrongStatusException $e) {
+    print_r($e->getMessage());
+}
 //var_dump($task->getActionMap());

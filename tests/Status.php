@@ -7,15 +7,20 @@ require_once "../vendor/autoload.php";
 
 use app\entities\Task;
 use app\enum\task\Status;
+use app\exceptions\Task\TaskHasWrongActionException;
 
 $task = new Task('new', 2, 1);
-assert($task->getNextStatus('cancel') === Status::STATUS_CANCEL->value, 'cancel');
-assert($task->getNextStatus('response') === null);
-assert($task->getNextStatus('approve_worker') === Status::STATUS_ACTIVE->value, 'active');
-assert($task->getNextStatus('complete') === Status::STATUS_COMPLETE->value, 'complete');
-assert($task->getNextStatus('reject') === Status::STATUS_FAILED->value, 'failed');
-// ожидается 'cancel'
-assert($task->getNextStatus('1') !== Status::STATUS_CANCEL, 'cancel');
-assert($task->getNextStatus((string)null) !== Status::STATUS_ACTIVE, 'active');
+try {
+    assert($task->getNextStatus('cancel') === Status::STATUS_CANCEL->value, 'cancel');
+    assert($task->getNextStatus('response') === null);
+    assert($task->getNextStatus('approve_worker') === Status::STATUS_ACTIVE->value, 'active');
+    assert($task->getNextStatus('complete') === Status::STATUS_COMPLETE->value, 'complete');
+    assert($task->getNextStatus('reject') === Status::STATUS_FAILED->value, 'failed');
+    // ожидается 'cancel'
+    assert($task->getNextStatus('1') !== Status::STATUS_CANCEL, 'cancel');
+    assert($task->getNextStatus((string)null) !== Status::STATUS_ACTIVE, 'active');
+} catch (TaskHasWrongActionException $e) {
+    print_r($e->getMessage());
+}
 
-var_dump($task->getStatusMap());
+//var_dump($task->getStatusMap());

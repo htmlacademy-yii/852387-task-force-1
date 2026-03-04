@@ -29,5 +29,5 @@ enum Action: string
 }
 
 //проверка
-$action = Action::getTranslateActionMap();
-var_dump($action);
+//$action = Action::getTranslateActionMap();
+//var_dump($action);
