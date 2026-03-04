@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace app\enum\task;
 
@@ -7,7 +8,7 @@ enum Status: string
     case STATUS_NEW = 'new';   // новое задание (заказчик)
     case STATUS_CANCEL = 'cancel';  // отменено, отменил заказчик
     case STATUS_ACTIVE = 'active';   // в работе, заказчик выбрал исполнителя, если откликнулись
-    case STATUS_READY = 'ready';    // выполнено, принято заказчиком
+    case STATUS_COMPLETE = 'complete';    // выполнено, принято заказчиком
     case STATUS_FAILED = 'failed';   // провалено, отказался исполнитель
 
     /**
@@ -20,12 +21,12 @@ enum Status: string
             self::STATUS_NEW->value => 'новое',
             self::STATUS_CANCEL->value => 'отменено',
             self::STATUS_ACTIVE->value => 'в работе',
-            self::STATUS_READY->value => 'выполнено',
+            self::STATUS_COMPLETE->value => 'выполнено',
             self::STATUS_FAILED->value => 'провалено',
         ];
     }
 }
 
 // проверка
-$status = Status::getTranslateStatusMap();
-var_dump($status);
+//$status = Status::getTranslateStatusMap();
+//var_dump($status);

@@ -5,9 +5,9 @@ namespace app\entities;
 
 use app\enum\task\Action;
 
-class ActionApproveWorker extends AbstractAction
+class ActionResponse extends AbstractAction
 {
-    protected Action $action = Action::ACTION_APPROVE_WORKER;
+    protected Action $action = Action::ACTION_RESPONSE;
 
     /**
      * Метод проверки прав
@@ -19,6 +19,6 @@ class ActionApproveWorker extends AbstractAction
      **/
     public static function compareId(int $currentUserId, int $authorId, ?int $workerId): bool
     {
-        return $currentUserId === $authorId;
+        return $currentUserId === $workerId;
     }
 }

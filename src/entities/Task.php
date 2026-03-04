@@ -5,33 +5,38 @@ namespace app\entities;
 
 use app\enum\task\Action;
 use app\enum\task\Status;
+use app\exceptions\Task\TaskHasWrongActionException;
+use app\exceptions\Task\TaskHasWrongStatusException;
 
 final class Task
 {
-    public int $ownerId;
-    public ?int $workerId;
-    public string $status;
+    private int $authorId; // ID автора задания
+    private ?int $workerId; // ID исполнителя задания
+    public string $status; // статус задания
 
-    public function __construct(string $status, int $idOwner, ?int $idWorker)
+    public function __construct(string $status, int $idAuthor, ?int $idWorker)
     {
         $this->status = $status;
-        $this->ownerId = $idOwner;
+        $this->authorId = $idAuthor;
         $this->workerId = $idWorker;
     }
 
     /**
      * Метод для возврата статуса, в который перейдет задача для указанного действия
-     *
      * @param string $action действие над задачей
      * @return ?string возвращает статус задачи
+     * @throws TaskHasWrongActionException
      */
     public function getNextStatus(string $action): ?string
     {
-        $action = Action::tryFrom($action);
-        return match ($action) {
+        $currentAction = Action::tryFrom($action);
+        if (!$currentAction) {
+            throw new TaskHasWrongActionException('У задачи нет такого действия');
+        }
+        return match ($currentAction) {
             Action::ACTION_CANCEL => Status::STATUS_CANCEL->value,
             Action::ACTION_APPROVE_WORKER => Status::STATUS_ACTIVE->value,
-            Action::ACTION_ACCEPT => Status::STATUS_READY->value,
+            Action::ACTION_COMPLETE => Status::STATUS_COMPLETE->value,
             Action::ACTION_REJECT => Status::STATUS_FAILED->value,
             default => null,
         };
@@ -39,29 +44,33 @@ final class Task
 
     /**
      * Метод для получения доступных действий для указанного статуса и роли пользователя(заказчик или исполнитель)
-     *
      * @param string $status статус задачи
      * @return ?object возвращает возможные действия в виде объекта действия
+     * @throws TaskHasWrongStatusException
      */
     public function getAvailableAction(string $status, int $userId): ?object
     {
-        $status = Status::tryFrom($status);
-        $actions = match ($status) {
+        $currentStatus = Status::tryFrom($status);
+        if (!$currentStatus) {
+            throw new TaskHasWrongStatusException('У задачи нет такого статуса');
+        }
+        $actions = match ($currentStatus) {
             Status::STATUS_NEW => [
                 ActionCancel::class,
-                ActionReply::class
-            ], //(cancel/отменить - для заказчика, reply/откликнуться - для исполнителя)
+                ActionResponse::class
+            ], //(cancel/отменить — для заказчика, response/откликнуться — для исполнителя)
             Status::STATUS_ACTIVE => [
-                ActionAccept::class,
+                ActionComplete::class,
                 ActionReject::class
-            ], //  (accept/принять - для заказчика, reject/отказаться - для исполнителя)
+            ], //  (complete/принять — для заказчика, reject/отказаться — для исполнителя)
             default => [],
         };
 
         foreach ($actions as $className) {
-            if ($className::compareId($userId, $this->ownerId, $this->workerId))
+            if ($className::compareId($userId, $this->authorId, $this->workerId)) {
                 return new $className();
-        };
+            }
+        }
         return null;
     }
 

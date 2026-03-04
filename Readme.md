@@ -1,8 +1,7 @@
 # Личный проект «TaskForce»
 
 * Студент: [Татьяна Смирнова](https://up.htmlacademy.ru/yii-individual/1/user/852387).
-* Наставник: [Сергей Попов](https://up.htmlacademy.ru/yii-individual/1/user/1181399).
-
+* Наставник: [Сергей Парфенов](https://up.htmlacademy.ru/profession/backender-garage-8/1/yii-individual/1/user/926645)
 ---
 
 **Обратите внимание на файл:**

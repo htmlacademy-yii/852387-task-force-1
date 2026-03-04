@@ -1,18 +1,24 @@
 <?php
+declare(strict_types=1);
 
 namespace app\entities;
-class ActionCancel extends Action
+
+use app\enum\task\Action;
+
+class ActionCancel extends AbstractAction
 {
+    protected Action $action = Action::ACTION_CANCEL;
+
     /**
      * Метод проверки прав
-     * @param int $currentUserId ID заказчика задания
-     * @param int $ownerId ID текущего пользователя
+     * @param int $currentUserId ID текущего пользователя
+     * @param int $authorId ID автора задания
      * @param ?int $workerId ID исполнителя задания
      *
      * @return bool true/false
      **/
-    public static function compareId(int $currentUserId, int $ownerId, ?int $workerId): bool
+    public static function compareId(int $currentUserId, int $authorId, ?int $workerId): bool
     {
-        return $currentUserId === $ownerId;
+        return $currentUserId === $authorId;
     }
 }

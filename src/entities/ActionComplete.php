@@ -5,9 +5,9 @@ namespace app\entities;
 
 use app\enum\task\Action;
 
-class ActionApproveWorker extends AbstractAction
+class ActionComplete extends AbstractAction
 {
-    protected Action $action = Action::ACTION_APPROVE_WORKER;
+    protected Action $action = Action::ACTION_COMPLETE;
 
     /**
      * Метод проверки прав
